@@ -9,6 +9,7 @@ springboot-vue-ts-sample
   - Java
   - SpringBoot
   - Doma2
+  - PostgreSQL
 - front end
   - Vue.js
   - TypeScript
