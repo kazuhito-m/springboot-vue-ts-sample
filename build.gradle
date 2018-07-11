@@ -1,34 +1,53 @@
 buildscript {
-	ext {
-		springBootVersion = '2.1.0.BUILD-SNAPSHOT'
-	}
-	repositories {
-		mavenCentral()
-		maven { url "https://repo.spring.io/snapshot" }
-		maven { url "https://repo.spring.io/milestone" }
-	}
-	dependencies {
-		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-	}
+    ext {
+        springBootVersion = '2.1.0.BUILD-SNAPSHOT'
+        encoding = 'UTF-8'
+        compatibility = 1.8
+    }
+    repositories {
+        mavenCentral()
+        maven { url "https://repo.spring.io/snapshot" }
+        maven { url "https://repo.spring.io/milestone" }
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
 }
 
 apply plugin: 'java'
-apply plugin: 'eclipse'
+apply plugin: 'idea'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 
 group = 'com.github.kazuhito_m'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = 1.8
+
+sourceCompatibility = compatibility
+targetCompatibility = compatibility
 
 repositories {
-	mavenCentral()
-	maven { url "https://repo.spring.io/snapshot" }
-	maven { url "https://repo.spring.io/milestone" }
+    mavenCentral()
+    maven { url "https://repo.spring.io/snapshot" }
+    maven { url "https://repo.spring.io/milestone" }
+    maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
 }
 
+// JavaクラスとSQLファイルの出力先ディレクトリを同じにし、コンパイルより前にSQLファイルを出力先ディレクトリにコピーする。
+processResources.destinationDir = compileJava.destinationDir
+compileJava.dependsOn processResources
+
+
+ext['thymeleaf.version'] = '3.0.9.RELEASE'
+ext['thymeleaf-layout-dialect.version'] = '2.3.0'
 
 dependencies {
-	compile('org.springframework.boot:spring-boot-starter-web')
-	testCompile('org.springframework.boot:spring-boot-starter-test')
+    compile('org.springframework.boot:spring-boot-starter-web')
+    compile("org.springframework.boot:spring-boot-starter-thymeleaf")
+    compile("org.seasar.doma:doma:2.19.2")
+    compile("org.seasar.doma.boot:doma-spring-boot-starter:1.1.1")
+    compile("org.springframework.boot:spring-boot-starter-jdbc")
+
+    runtime("com.h2database:h2:1.4.196")
+
+    testCompile('org.springframework.boot:spring-boot-starter-test')
 }
