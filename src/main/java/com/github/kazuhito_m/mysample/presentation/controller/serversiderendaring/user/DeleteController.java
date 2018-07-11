@@ -1,4 +1,4 @@
-package com.github.kazuhito_m.mysample.presentation.controller.user;
+package com.github.kazuhito_m.mysample.presentation.controller.serversiderendaring.user;
 
 import com.github.kazuhito_m.mysample.application.service.UserService;
 import com.github.kazuhito_m.mysample.domain.model.user.User;
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
-@RequestMapping("user/{userId}/delete")
+@RequestMapping("/serversiderendaring/user/{userId}/delete")
 public class DeleteController {
     final UserService userService;
 
@@ -33,7 +33,7 @@ public class DeleteController {
 
         attributes.addAttribute("name", user.name().toString());
 
-        return "redirect:/user/someone/delete/completed";
+        return "redirect:/serversiderendaring/user/someone/delete/completed";
     }
 
     @GetMapping(value = "/completed")

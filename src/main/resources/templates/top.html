@@ -12,7 +12,7 @@
   </div>
 
     <a class="ui positive basic button"
-       th:href="@{/user/register}">利用者の新規登録</a>
+       th:href="@{/serversiderendaring/user/register}">利用者の新規登録</a>
 
   <div class="ui basic segment">
 
@@ -33,11 +33,11 @@
         <td th:text="${user.age()}"/>
         <td>
         <a class="ui secondary basic button"
-           th:href="@{/user/{userId}/update(userId=${user.identifier()})}">変更</a>
+           th:href="@{/serversiderendaring/user/{userId}/update(userId=${user.identifier()})}">変更</a>
         </td>
         <td>
         <a class="ui negative basic button"
-           th:href="@{/user/{userId}/delete/view(userId=${user.identifier()})}">削除</a>
+           th:href="@{/serversiderendaring/user/{userId}/delete/view(userId=${user.identifier()})}">削除</a>
         </td>
       </tr>
     </tbody>

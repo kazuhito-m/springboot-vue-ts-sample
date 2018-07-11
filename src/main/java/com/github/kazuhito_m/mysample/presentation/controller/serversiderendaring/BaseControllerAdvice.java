@@ -1,4 +1,4 @@
-package com.github.kazuhito_m.mysample.presentation.controller;
+package com.github.kazuhito_m.mysample.presentation.controller.serversiderendaring;
 
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.web.bind.WebDataBinder;

@@ -1,4 +1,4 @@
-package com.github.kazuhito_m.mysample.presentation.controller.user;
+package com.github.kazuhito_m.mysample.presentation.controller.serversiderendaring.user;
 
 import com.github.kazuhito_m.mysample.application.service.UserService;
 import com.github.kazuhito_m.mysample.domain.model.user.GenderType;
@@ -14,7 +14,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
 @Controller
-@RequestMapping("user/register")
+@RequestMapping("/serversiderendaring/user/register")
 @SessionAttributes({"user"})
 class RegisterController {
 
@@ -43,7 +43,7 @@ class RegisterController {
     @GetMapping(value = "")
     String clearSessionAtStart(SessionStatus sessionStatus) {
         sessionStatus.setComplete();
-        return "forward:/user/register/input";
+        return "forward:/serversiderendaring/user/register/input";
     }
 
     @GetMapping(value = "input")
@@ -86,7 +86,7 @@ class RegisterController {
         attributes.addAttribute("name", user.name().toString());
         attributes.addAttribute("id", user.identifier().toString());
 
-        return "redirect:/user/register/completed";
+        return "redirect:/serversiderendaring/user/register/completed";
     }
 
     @GetMapping(value = "completed")

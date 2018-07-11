@@ -1,4 +1,4 @@
-package com.github.kazuhito_m.mysample.presentation.controller.user;
+package com.github.kazuhito_m.mysample.presentation.controller.serversiderendaring.user;
 
 import com.github.kazuhito_m.mysample.application.service.UserService;
 import com.github.kazuhito_m.mysample.domain.model.user.GenderType;
@@ -14,7 +14,7 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
-@RequestMapping("user/{userId}/update")
+@RequestMapping("/serversiderendaring/user/{userId}/update")
 @SessionAttributes({"user"})
 class UpdateController {
 
@@ -42,7 +42,7 @@ class UpdateController {
     String clearSessionAtStart(@PathVariable(value = "userId") String userId,
                                SessionStatus status) {
         status.setComplete();
-        return "forward:/user/" + userId + "/update/input";
+        return "forward:/serversiderendaring/user/" + userId + "/update/input";
     }
 
     @GetMapping(value = "input")
@@ -77,7 +77,7 @@ class UpdateController {
         attributes.addAttribute("name", user.name().toString());
         attributes.addAttribute("id", user.identifier().toString());
 
-        return "redirect:/user/someone/update/completed";
+        return "redirect:/serversiderendaring/user/someone/update/completed";
     }
 
     @GetMapping(value = "completed")

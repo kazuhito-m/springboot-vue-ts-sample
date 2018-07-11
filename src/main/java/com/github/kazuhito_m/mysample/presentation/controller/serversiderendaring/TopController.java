@@ -1,4 +1,4 @@
-package com.github.kazuhito_m.mysample.presentation.controller;
+package com.github.kazuhito_m.mysample.presentation.controller.serversiderendaring;
 
 import com.github.kazuhito_m.mysample.application.service.UserService;
 import com.github.kazuhito_m.mysample.domain.model.user.UserSummaries;
@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/")
+@RequestMapping("/serversiderendaring")
 class TopController {
     final UserService userService;
 
