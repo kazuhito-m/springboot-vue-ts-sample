@@ -20,11 +20,18 @@ springboot-vue-ts-sample
 ## 更新方法
 
 1. SpringBoot本家サイトから「最新のテンプレート」を作成し取得
-  １. [こちらのサイト](https://start.spring.io)でプロジェクト一式をつくりダウンロード
-  0. 名前は `com.github.kazuhito_m.mysample` で `gradle` , `java` , 最新, 拡張に `web` を指定
+    1. [こちらのサイト](https://start.spring.io)でプロジェクト一式をつくりダウンロード
+    0. 名前は `com.github.kazuhito_m.mysample` で `gradle` , `java` , 最新, 拡張に `web` を指定
 0. `Isolating the Domain` からソースを落としてきてマージ
-  1. `src` を `mysample` にクラス群をコピー、 `Application` クラスはこちらのものに置き換え
-  0. `infrastractur` 層を `Doma2` 用に書き換え
+    1. `src` を `mysample` にクラス群をコピー、 `Application` クラスはこちらのものに置き換え
+    0. `infrastractur` 層を `Doma2` 用に書き換え
+
+---
+
+0. DockerとFlywayでのDB初期化を追加
+0. バージョンの最新化確認
+    0. gradle wrapper
+    0. Doma2
 
 # Usage
 
