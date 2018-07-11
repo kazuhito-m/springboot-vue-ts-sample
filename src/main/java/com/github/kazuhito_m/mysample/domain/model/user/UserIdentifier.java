@@ -9,6 +9,10 @@ public class UserIdentifier {
     @Email(message = "メールアドレスが正しくありません。")
     String value = "";
 
+    public String value() {
+        return this.value;
+    }
+
     public UserIdentifier() {
     }
 
@@ -20,4 +24,5 @@ public class UserIdentifier {
     public String toString() {
         return value;
     }
+
 }

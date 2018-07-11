@@ -11,6 +11,17 @@ public class DateOfBirth {
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     LocalDate value;
 
+    public DateOfBirth() {
+    }
+
+    public DateOfBirth(LocalDate value) {
+        this.value = value;
+    }
+
+    public LocalDate value() {
+        return this.value;
+    }
+
     Age age() {
         return new Age(LocalDate.now().getYear() - value.getYear());
     }

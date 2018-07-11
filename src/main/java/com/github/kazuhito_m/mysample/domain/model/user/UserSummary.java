@@ -1,9 +1,15 @@
 package com.github.kazuhito_m.mysample.domain.model.user;
 
 public class UserSummary {
-    UserIdentifier identifier;
-    Name name;
-    DateOfBirth dateOfBirth;
+    final UserIdentifier identifier;
+    final Name name;
+    final DateOfBirth dateOfBirth;
+
+    public UserSummary(UserIdentifier identifier, Name name, DateOfBirth dateOfBirth) {
+        this.identifier = identifier;
+        this.name = name;
+        this.dateOfBirth = dateOfBirth;
+    }
 
     public UserIdentifier identifier() {
         return identifier;

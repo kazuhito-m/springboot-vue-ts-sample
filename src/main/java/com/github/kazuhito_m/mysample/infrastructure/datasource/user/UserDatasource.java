@@ -1,31 +1,35 @@
 package com.github.kazuhito_m.mysample.infrastructure.datasource.user;
 
-import com.github.kazuhito_m.mysample.domain.model.user.User;
-import com.github.kazuhito_m.mysample.domain.model.user.UserIdentifier;
-import com.github.kazuhito_m.mysample.domain.model.user.UserRepository;
-import com.github.kazuhito_m.mysample.domain.model.user.UserSummaries;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.github.kazuhito_m.mysample.domain.model.user.*;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
+
+import static java.util.stream.Collectors.toList;
 
 @Repository
 public class UserDatasource implements UserRepository {
-    @Autowired
-    UserMapper mapper;
+    final UserDao dao;
 
     @Override
     public User findBy(UserIdentifier id) {
-        return mapper.findBy(id);
+        return dao.findBy(id.value())
+            .map(UserTable::toUser)
+            .get();
     }
 
     @Override
-    public Boolean isExist(User user) {
-        if (findBy(user.identifier()) == null) return false;
-        return true;
+    public boolean isExist(User user) {
+        return dao.findBy(user.identifier().value()).isPresent();
     }
 
     @Override
     public UserSummaries list() {
-        return new UserSummaries(mapper.list());
+        List<UserSummary> summaries = dao.list()
+            .stream()
+            .map(userTable -> userTable.toUserSummary())
+            .collect(toList());
+        return new UserSummaries(summaries);
     }
 
     @Override
@@ -35,17 +39,22 @@ public class UserDatasource implements UserRepository {
 
     @Override
     public void register(User user) {
-        mapper.register(user);
+        dao.register(new UserTable(user));
     }
 
     @Override
     public void update(User user) {
-        mapper.delete(user);
-        mapper.register(user);
+        UserTable record = new UserTable(user);
+        dao.delete(record);
+        dao.register(record);
     }
 
     @Override
     public void delete(User user) {
-        mapper.delete(user);
+        dao.delete(new UserTable(user));
+    }
+
+    public UserDatasource(UserDao mapper) {
+        this.dao = mapper;
     }
 }

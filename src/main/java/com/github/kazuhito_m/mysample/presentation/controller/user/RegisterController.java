@@ -1,9 +1,8 @@
 package com.github.kazuhito_m.mysample.presentation.controller.user;
 
-import example.application.service.UserService;
-import example.domain.model.user.GenderType;
-import example.domain.model.user.User;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.github.kazuhito_m.mysample.application.service.UserService;
+import com.github.kazuhito_m.mysample.domain.model.user.GenderType;
+import com.github.kazuhito_m.mysample.domain.model.user.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -20,22 +19,21 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 class RegisterController {
 
     private static final String[] accept =
-            {
-                    "identifier.value",
-                    "name.value",
+        {
+            "identifier.value",
+            "name.value",
 
-                    "dateOfBirth.value",
-                    "gender.value",
-                    "phoneNumber.value",
-            };
+            "dateOfBirth.value",
+            "gender.value",
+            "phoneNumber.value",
+        };
 
     @InitBinder
     public void initBinder(WebDataBinder binder) {
         binder.setAllowedFields(accept);
     }
 
-    @Autowired
-    UserService userService;
+    final UserService userService;
 
     @ModelAttribute("genderTypes")
     GenderType[] addGendersToModel() {
@@ -80,8 +78,8 @@ class RegisterController {
 
     @GetMapping(value = "register")
     String registerThenRedirectAndClearSession(
-            @ModelAttribute User user,
-            SessionStatus status, RedirectAttributes attributes) {
+        @ModelAttribute User user,
+        SessionStatus status, RedirectAttributes attributes) {
         userService.register(user);
         status.setComplete();
 
@@ -98,5 +96,9 @@ class RegisterController {
         model.addAttribute("name", name);
         model.addAttribute("id", id);
         return "user/register/result";
+    }
+
+    RegisterController(UserService userService) {
+        this.userService = userService;
     }
 }

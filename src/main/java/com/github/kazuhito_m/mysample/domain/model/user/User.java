@@ -21,11 +21,25 @@ public class User {
     @Valid
     PhoneNumber phoneNumber;
 
+    public User(
+        UserIdentifier identifier,
+        Name name,
+        DateOfBirth dateOfBirth,
+        Gender gender,
+        PhoneNumber phoneNumber
+    ) {
+        this.identifier = identifier;
+        this.name = name;
+        this.dateOfBirth = dateOfBirth;
+        this.gender = gender;
+        this.phoneNumber = phoneNumber;
+    }
+
     public User() {
         identifier = new UserIdentifier();
-        name = new Name();
+        name = new Name("");
         dateOfBirth = new DateOfBirth();
-        gender = new Gender();
+        gender = new Gender(GenderType.不明);
         phoneNumber = new PhoneNumber();
     }
 
@@ -52,11 +66,11 @@ public class User {
     @Override
     public String toString() {
         return "User{" +
-                "identifier=" + identifier +
-                ", name=" + name +
-                ", dateOfBirth=" + dateOfBirth +
-                ", phoneNumber=" + phoneNumber +
-                ", gender=" + gender +
-                '}';
+            "identifier=" + identifier +
+            ", name=" + name +
+            ", dateOfBirth=" + dateOfBirth +
+            ", phoneNumber=" + phoneNumber +
+            ", gender=" + gender +
+            '}';
     }
 }

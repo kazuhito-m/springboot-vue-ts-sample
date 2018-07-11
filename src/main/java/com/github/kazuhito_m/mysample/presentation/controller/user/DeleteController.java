@@ -1,9 +1,8 @@
 package com.github.kazuhito_m.mysample.presentation.controller.user;
 
-import example.application.service.UserService;
-import example.domain.model.user.User;
-import example.domain.model.user.UserIdentifier;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.github.kazuhito_m.mysample.application.service.UserService;
+import com.github.kazuhito_m.mysample.domain.model.user.User;
+import com.github.kazuhito_m.mysample.domain.model.user.UserIdentifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,9 +14,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 @RequestMapping("user/{userId}/delete")
 public class DeleteController {
-
-    @Autowired
-    UserService userService;
+    final UserService userService;
 
     @GetMapping(value = "view")
     String show(@PathVariable(value = "userId") UserIdentifier identifier, Model model) {
@@ -29,8 +26,8 @@ public class DeleteController {
 
     @GetMapping(value = "")
     String deleteThenRedirect(
-            @PathVariable(value = "userId") UserIdentifier identifier,
-            Model model, RedirectAttributes attributes) {
+        @PathVariable(value = "userId") UserIdentifier identifier,
+        Model model, RedirectAttributes attributes) {
         User user = userService.findById(identifier);
         userService.delete(user);
 
@@ -46,4 +43,7 @@ public class DeleteController {
         return "user/delete/result";
     }
 
+    DeleteController(UserService userService) {
+        this.userService = userService;
+    }
 }
