@@ -25,6 +25,8 @@ springboot-vue-ts-sample
 0. `Isolating the Domain` からソースを落としてきてマージ
     1. `src` を `mysample` にクラス群をコピー、 `Application` クラスはこちらのものに置き換え
     0. `infrastractur` 層を `Doma2` 用に書き換え
+        1. ここは「過去のコミット履歴」から収集(少し煩雑なので)
+
 
 ---
 
