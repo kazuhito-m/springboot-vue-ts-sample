@@ -26,7 +26,13 @@ springboot-vue-ts-sample
     1. `src` を `mysample` にクラス群をコピー、 `Application` クラスはこちらのものに置き換え
     0. `infrastractur` 層を `Doma2` 用に書き換え
         1. ここは「過去のコミット履歴」から収集(少し煩雑なので)
-
+0. `vue-cli` の最新を入れた状態でプロジェクトを作って追加
+    1. `npm install -g @vue/cli` でコマンドをインストール
+    0. `vue create springboot-vue-ts-sample-front` でプロジェクト作成
+        1. `npm run clean` など「npmで使うコマンド」を `package.json` に設定する
+    0. `mv springboot-vue-ts-sample-front front` でリネーム
+    0. `build.bradle` に「front以下をnpmでビルドする」設定を追加
+        1. ここは「過去のコミット履歴」から収集(少し煩雑なので)
 
 ---
 
