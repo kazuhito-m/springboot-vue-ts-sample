@@ -5,6 +5,7 @@
 </template>
 
 <style lang="scss">
+#custom-form .short-input { width: 20em;}
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
