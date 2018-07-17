@@ -47,16 +47,16 @@ import User from './User';
 export default class UserList extends Vue {
   private _users: User[] = [];
 
-  async created() {
-    await this.initialize();
+  public created() {
+    this._users = this.receiveUsers();
   }
 
-  private async initialize() {
+  private receiveUsers(): User[] {
     // 仮実装
-    this._users = [
+    return [
       {
         identifier: 'kazuhito@mail.com',
-        name: 'かずひと',
+        name: 'かずひと みうら',
         age: 3
       }
     ];
