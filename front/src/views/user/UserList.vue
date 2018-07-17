@@ -20,10 +20,11 @@
           </tr>
         </thead>
         <tbody>
-          <tr th:each="user : ${users.list()}">
-            <td th:text="${user.identifier()}" />
-            <td th:text="${user.name()}" />
-            <td th:text="${user.age()}" />
+          <tr v-for="user in users"
+            :key="user.identifier">
+            <td> {{ user.identifier }} </td>
+            <td> {{ user.name }} </td>
+            <td> {{ user.age }} </td>
             <td>
               <a class="ui secondary basic button" th:href="@{/serversiderendaring/user/{userId}/update(userId=${user.identifier()})}">変更</a>
             </td>
@@ -37,12 +38,32 @@
   </div>
   <!-- <footer th:include="fragments/layout :: footer"/> -->
 </template>
-<script lang="ts">
-  import {
-    Component,
-    Vue
-  } from 'vue-property-decorator';
 
-  @Component
-  export default class UserList extends Vue {}
+<script lang="ts">
+import { Component, Vue } from 'vue-property-decorator';
+import User from './User';
+
+@Component
+export default class UserList extends Vue {
+  private _users: User[] = [];
+
+  async created() {
+    await this.initialize();
+  }
+
+  private async initialize() {
+    // 仮実装
+    this._users = [
+      {
+        identifier: 'kazuhito@mail.com',
+        name: 'かずひと',
+        age: 3
+      }
+    ];
+  }
+
+  public get users(): User[] {
+    return this._users;
+  }
+}
 </script>
