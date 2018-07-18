@@ -5,7 +5,7 @@
       <h1 class="ui header">利用者一覧</h1>
     </div>
 
-    <a class="ui positive basic button" th:href="@{/serversiderendaring/user/register}">利用者の新規登録</a>
+    <router-link to="/user/register" class="ui positive basic button">利用者の新規登録</router-link>
 
     <div class="ui basic segment">
 
