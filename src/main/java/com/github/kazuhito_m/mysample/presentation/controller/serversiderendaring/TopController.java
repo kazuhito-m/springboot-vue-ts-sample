@@ -14,7 +14,7 @@ class TopController {
 
     @ModelAttribute("users")
     UserSummaries users() {
-        return userService.list();
+        return userService.allUsers();
     }
 
     @GetMapping

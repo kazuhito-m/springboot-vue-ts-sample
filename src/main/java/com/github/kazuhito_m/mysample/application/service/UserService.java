@@ -18,7 +18,7 @@ public class UserService {
     return userRepository.isExist(user);
   }
 
-  public UserSummaries list() {
+  public UserSummaries allUsers() {
     return userRepository.list();
   }
 
