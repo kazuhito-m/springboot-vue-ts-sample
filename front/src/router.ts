@@ -9,7 +9,7 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'userList',
+      name: 'top',
       component: UserList,
     },
     {
