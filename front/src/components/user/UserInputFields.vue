@@ -13,7 +13,7 @@
       :value="userInput.dateOfBirth"
       label="生年月日"
       placeholder="2000-01-01"
-      :inputErrors="userInput.inputErrors"
+      :inputErrors="userInput.inputErrorsp"
     />
 
     <InputField
@@ -24,30 +24,29 @@
       :inputErrors="userInput.inputErrors"
     />
 
-    <div th:replace="fragments/radio::macro('gender.value','性別','genderTypes')">
-      <div class="ui radio checkbox">
-        <label>性別</label>
-        <input type="radio" name="gender">
-        <label>不明</label>
-      </div>
-    </div>
+    <RadioField
+      fieldId="gender"
+      :value="userInput.gender"
+      label="性別"
+      :items="userInput.genderTypes"
+      :inputErrors="userInput.inputErrors"
+    />
   </div>
 </template>
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator';
 import InputField from '@/components/InputField.vue';
+import RadioField from '@/components/RadioField.vue';
 import UserInput from '@/components/user/UserInput';
 
 @Component({
   components: {
-    InputField
+    InputField,
+    RadioField
   }
 })
 export default class UserInputFields extends Vue {
-  @Prop({
-    type: Object,
-    default: () => new UserInput()
-  })
+  @Prop({ type: Object, default: () => new UserInput() })
   public userInput?: UserInput;
 }
 </script>

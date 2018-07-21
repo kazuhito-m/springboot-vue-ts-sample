@@ -1,25 +1,30 @@
 <template>
-    <!--入力フィールドの部品-->
-    <div class="field" 
-        :class="classNameWhenError()">
+    <div th:fragment="macro(field_id,label,members)" class="inline fields" th:classappend="${#fields.hasErrors('__${field_id}__')}? 'error'">
+
         <label>{{ label }}</label>
-        <input type="text" class="short-input" 
-            :id="fieldId"
-            :name="fieldId"
-            :placeholder="placeholder" 
-            :value="value"/>
+        <div class="field" v-for="item in items" v-bind:key="item.value">
+            <div class="ui radio checkbox">
+                <input type="radio" 
+                    :value="item.value"
+                    :id="fieldId"
+                    :name="fieldId"
+                    :checked="same(item.value)"
+                />
+                <label >{{ item.caption }}</label>
+            </div>
+        </div>
         <div class="ui left pointing red basic label" 
             v-if="hasError()" >
             <span>{{ errorMessage() }}</span>
         </div>
-
     </div>
 </template>
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator';
+import RadioItem from '@/components/RadioItem';
 
 @Component
-export default class InputField extends Vue {
+export default class RadioField extends Vue {
   @Prop({ type: String })
   private value!: string;
 
@@ -29,11 +34,15 @@ export default class InputField extends Vue {
   @Prop({ type: String })
   private label!: string;
 
-  @Prop({ type: String })
-  private placeholder!: string;
+  @Prop({ type: Array, default: () => [] })
+  private items!: RadioItem[];
 
   @Prop({ type: Object, default: () => {} })
   private inputErrors!: { [key: string]: string };
+
+  public same(other: string): boolean {
+    return this.value === other;
+  }
 
   private nonEmptyInputErrors(): { [key: string]: string } {
     if (this.inputErrors === undefined) return {};

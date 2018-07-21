@@ -13,6 +13,11 @@ export default new Router({
       component: UserList,
     },
     {
+      path: '/user',
+      name: 'userList',
+      component: UserList,
+    },
+    {
       path: '/user/register',
       name: 'userRegister',
       component: UserRegisterForm,

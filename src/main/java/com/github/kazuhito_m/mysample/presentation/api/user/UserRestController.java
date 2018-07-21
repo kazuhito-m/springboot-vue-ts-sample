@@ -1,11 +1,13 @@
 package com.github.kazuhito_m.mysample.presentation.api.user;
 
 import com.github.kazuhito_m.mysample.application.service.UserService;
+import com.github.kazuhito_m.mysample.domain.model.user.GenderType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.toList;
 
@@ -20,6 +22,13 @@ public class UserRestController {
             .list()
             .stream()
             .map(UserResponse::new)
+            .collect(toList());
+    }
+
+    @GetMapping("/genderTypes")
+    List<String> genderTypes() {
+        return Stream.of(GenderType.values())
+            .map(GenderType::name)
             .collect(toList());
     }
 

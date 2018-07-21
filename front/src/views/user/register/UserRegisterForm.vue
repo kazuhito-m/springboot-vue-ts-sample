@@ -24,7 +24,7 @@
     </div>
     <div class="ui basic segment">
       <button class="ui positive basic button">確認する</button>
-      <a th:href="@{/serversiderendaring}">一覧に戻る</a>
+      <router-link to="/user">一覧に戻る</router-link>
     </div>
   </form>
   </div>
@@ -35,7 +35,6 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import User from '@/views/user/User';
 import axios from '@/parts/network/AxiosWrapper';
 import InputField from '@/components/InputField.vue';
 import UserInputFields from '@/components/user/UserInputFields.vue';
@@ -48,8 +47,16 @@ import UserInput from '@/components/user/UserInput';
   }
 })
 export default class UserRegisterForm extends Vue {
-  public userInput = new UserInput();
+  public userInput: UserInput = new UserInput();
 
-  public async created() {}
+  public async created() {
+    const genderTypeValues: string[] = await this.receiveGenderTypeValues();
+    this.userInput.initializeGenderTypes(genderTypeValues);
+  }
+
+  private async receiveGenderTypeValues(): Promise<string[]> {
+    const response = await axios.get('/api/user/genderTypes');
+    return response.data;
+  }
 }
 </script>
