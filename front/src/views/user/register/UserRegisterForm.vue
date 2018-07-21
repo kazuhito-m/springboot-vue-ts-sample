@@ -11,12 +11,15 @@
         th:object="${user}" th:action="@{/serversiderendaring/user/register/confirm}">
 
     <div class="ui vertical segment">
-    <div th:replace="fragments/input::macro('identifier.value','利用者ID','someone@example.com')">
-      <label>ID</label>
-      <input type="text">
-    </div>
 
-    <div th:include="user/update/form ::input-fields"></div>
+      <InputField 
+        fieldId="identifier" 
+        :value="userInput.identifier"
+        label="利用者ID" 
+        placeholder="someone@example.com" 
+        :inputErrors="userInput.inputErrors" />
+
+      <UserInputFields :userInput="userInput" />
 
     </div>
     <div class="ui basic segment">
@@ -34,10 +37,19 @@
 import { Component, Vue } from 'vue-property-decorator';
 import User from '@/views/user/User';
 import axios from '@/parts/network/AxiosWrapper';
+import InputField from '@/components/InputField.vue';
+import UserInputFields from '@/components/user/UserInputFields.vue';
+import UserInput from '@/components/user/UserInput';
 
-@Component
-export default class UserRegisterForm extends Vue {
-  public async created() {
+@Component({
+  components: {
+    InputField,
+    UserInputFields
   }
+})
+export default class UserRegisterForm extends Vue {
+  public userInput = new UserInput();
+
+  public async created() {}
 }
 </script>
