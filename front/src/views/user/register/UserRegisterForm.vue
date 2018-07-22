@@ -23,7 +23,7 @@
 
     </div>
     <div class="ui basic segment">
-      <button class="ui positive basic button">確認する</button>
+      <button type="button" class="ui positive basic button" @click="confirm()">確認する</button>
       <router-link to="/user">一覧に戻る</router-link>
     </div>
   </form>
@@ -52,6 +52,17 @@ export default class UserRegisterForm extends Vue {
   public async created() {
     const genderTypeValues: string[] = await this.receiveGenderTypeValues();
     this.userInput.initializeGenderTypes(genderTypeValues);
+  }
+
+  public confirm(): boolean {
+    // debug
+    console.log('identifier:' + this.userInput.identifier);
+    console.log('name:' + this.userInput.name);
+    console.log('dateOfBirth:' + this.userInput.dateOfBirth);
+    console.log('phoneNumber:' + this.userInput.phoneNumber);
+    console.log('gender:' + this.userInput.gender);
+    alert('確認する');
+    return false;
   }
 
   private async receiveGenderTypeValues(): Promise<string[]> {
