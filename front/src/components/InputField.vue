@@ -7,7 +7,7 @@
             :id="fieldId"
             :name="fieldId"
             :placeholder="placeholder" 
-            :value="value"/>
+            :value.sync="value"/>
         <div class="ui left pointing red basic label" 
             v-if="hasError()" >
             <span>{{ errorMessage() }}</span>
