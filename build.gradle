@@ -12,7 +12,7 @@ buildscript {
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-        classpath("com.moowork.gradle:gradle-node-plugin:1.2.0")
+        classpath("com.moowork.gradle:gradle-node-plugin:1.3.1")
     }
 }
 
@@ -38,7 +38,7 @@ ext['thymeleaf-layout-dialect.version'] = '2.3.0'
 ext['thymeleaf.version'] = '3.0.9.RELEASE'
 
 node {
-    version = '10.5.0'
+    version = '10.16.0'
     download = true
     nodeModulesDir = file("${project.projectDir}/front")
 }
@@ -66,15 +66,14 @@ processResources.destinationDir = compileJava.destinationDir
 compileJava.dependsOn processResources
 
 
-
 dependencies {
-    compile('org.springframework.boot:spring-boot-starter-web')
-    compile("org.springframework.boot:spring-boot-starter-thymeleaf")
-    compile("org.seasar.doma:doma:2.19.2")
-    compile("org.seasar.doma.boot:doma-spring-boot-starter:1.1.1")
-    compile("org.springframework.boot:spring-boot-starter-jdbc")
+    implementation('org.springframework.boot:spring-boot-starter-web')
+    annotationProcessor("org.seasar.doma:doma:2.24.0")
+    implementation("org.seasar.doma:doma:2.24.0")
+    implementation("org.seasar.doma.boot:doma-spring-boot-starter:1.1.1")
+    implementation("org.springframework.boot:spring-boot-starter-jdbc")
 
     runtime("com.h2database:h2:1.4.196")
 
-    testCompile('org.springframework.boot:spring-boot-starter-test')
+    testImplementation('org.springframework.boot:spring-boot-starter-test')
 }
