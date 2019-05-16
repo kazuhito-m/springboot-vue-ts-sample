@@ -54,7 +54,7 @@ public class UserDatasource implements UserRepository {
         dao.delete(new UserTable(user));
     }
 
-    public UserDatasource(UserDao mapper) {
-        this.dao = mapper;
+    public UserDatasource(UserDao dao) {
+        this.dao = dao;
     }
 }
