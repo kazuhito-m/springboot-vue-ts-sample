@@ -4,8 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
-import static com.fasterxml.jackson.annotation.JsonTypeInfo.As;
-
 public class CustomObjectMapper extends ObjectMapper {
     public CustomObjectMapper() {
         enable(SerializationFeature.INDENT_OUTPUT);
