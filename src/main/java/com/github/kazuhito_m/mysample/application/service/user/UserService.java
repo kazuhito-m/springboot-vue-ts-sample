@@ -1,4 +1,4 @@
-package com.github.kazuhito_m.mysample.application.service;
+package com.github.kazuhito_m.mysample.application.service.user;
 
 import com.github.kazuhito_m.mysample.domain.model.user.User;
 import com.github.kazuhito_m.mysample.domain.model.user.UserIdentifier;
