@@ -31,5 +31,9 @@ public class UserServiceCustomLogger implements CustomLogger {
                 + " 引数:hikisuu=" + joinPoint.getArgs()[0]
                 + ",戻り値:" + returnText;
         LOGGER.info(logText);
+
+        StackWalker stackWalker = StackWalker.getInstance(StackWalker.Option.RETAIN_CLASS_REFERENCE);
+        stackWalker.walk(s -> s.collect(Collectors.toList()))
+                .forEach(s -> LOGGER.info("呼び出し元:" + s));
     }
 }
