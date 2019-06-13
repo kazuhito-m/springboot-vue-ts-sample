@@ -5,10 +5,10 @@ import com.github.kazuhito_m.mysample.domain.model.operationhistory.OperationHis
 import java.time.LocalDateTime;
 
 public class OperationHistoryResponse {
-    private final LocalDateTime createdAt;
-    private final String clientIpAddress;
-    private final String requestPath;
-    private final String parameters;
+    public final LocalDateTime createdAt;
+    public final String clientIpAddress;
+    public final String requestPath;
+    public final String parameters;
 
     public OperationHistoryResponse(OperationHistory operationHistory) {
         createdAt = operationHistory.createdAt();

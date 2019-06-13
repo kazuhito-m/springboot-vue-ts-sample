@@ -9,15 +9,14 @@ import java.time.LocalDateTime;
 @Table(name = "operations.operation_histories")
 public class OperationHistoryTable {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private final Long operationHistoryId;
+    private final long operationHistoryId;
     private final String operationDescription;
     private final String clientIpAddress;
     private final String requestPath;
     private final String parameters;
     private final LocalDateTime createdAt;
 
-    public OperationHistoryTable(Long operationHistoryId, String operationDescription, String clientIpAddress, String requestPath, String parameters, LocalDateTime createdAt) {
+    public OperationHistoryTable(long operationHistoryId, String operationDescription, String clientIpAddress, String requestPath, String parameters, LocalDateTime createdAt) {
         this.operationHistoryId = operationHistoryId;
         this.operationDescription = operationDescription;
         this.clientIpAddress = clientIpAddress;
@@ -37,9 +36,9 @@ public class OperationHistoryTable {
         );
     }
 
-    public static OperationHistoryTable of(OperationHistory history) {
+    public static OperationHistoryTable of(long operationHistoryId, OperationHistory history) {
         return new OperationHistoryTable(
-                null,
+                operationHistoryId,
                 history.operationDescription(),
                 history.clientIpAddress(),
                 history.requestPath(),

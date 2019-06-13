@@ -25,7 +25,8 @@ public class OperationHistoryDatasource implements OperationHistoryRepository {
 
     @Override
     public void register(OperationHistory operationHistory) {
-        dao.register(OperationHistoryTable.of(operationHistory));
+        long id = dao.publishIdentifier();
+        dao.register(OperationHistoryTable.of(id, operationHistory));
     }
 
     public OperationHistoryDatasource(OperationHistoryDao dao) {

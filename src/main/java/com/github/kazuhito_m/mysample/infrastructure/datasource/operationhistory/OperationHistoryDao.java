@@ -12,6 +12,9 @@ import java.util.List;
 @Dao
 public interface OperationHistoryDao {
     @Select
+    Long publishIdentifier();
+
+    @Select
     List<OperationHistoryTable> list();
 
     @Insert
