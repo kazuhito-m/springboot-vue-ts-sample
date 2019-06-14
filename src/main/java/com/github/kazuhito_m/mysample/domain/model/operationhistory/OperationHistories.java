@@ -5,6 +5,10 @@ import java.util.List;
 public class OperationHistories {
     List<OperationHistory> values;
 
+    public List<OperationHistory> list() {
+        return values;
+    }
+
     public OperationHistories(List<OperationHistory> values) {
         this.values = values;
     }
