@@ -53,6 +53,10 @@ sourceSets {
     }
 }
 
+bootRun {
+    jvmArgs = ["-Djava.net.preferIPv4Stack=true"]
+}
+
 // JavaクラスとSQLファイルの出力先ディレクトリを同じにし、コンパイルより前にSQLファイルを出力先ディレクトリにコピーする。
 processResources.destinationDir = compileJava.destinationDir
 compileJava.dependsOn processResources
