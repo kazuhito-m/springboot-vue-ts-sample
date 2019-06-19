@@ -56,20 +56,6 @@ public class UserServiceCustomLogger implements CustomLogger {
         );
     }
 
-    private synchronized void writeLog() {
-        Optional<HttpServletRequest> maybeRequest = requestStocks.get();
-        maybeRequest.ifPresent(r -> {
-            try (FileWriter fw = new FileWriter("/home/kazuhito/work/stacktrace_test/filter/test.log", true)) {
-                fw.write("ThreadId: " + Thread.currentThread().getId());
-                fw.write(" ,今、ストックされてるリクエスト数: " + requestStocks.size());
-                fw.write(",url:" + r.getRequestURI());
-                fw.write(",params:" + r.getQueryString());
-                fw.write("\n");
-            } catch (IOException e) {
-            }
-        });
-    }
-
     public UserServiceCustomLogger(OperationHistoryService operationHistoryService, RequestStocks requestStocks) {
         this.operationHistoryService = operationHistoryService;
         this.requestStocks = requestStocks;
