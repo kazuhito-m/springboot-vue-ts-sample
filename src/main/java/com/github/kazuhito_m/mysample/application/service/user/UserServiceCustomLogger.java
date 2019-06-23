@@ -45,11 +45,13 @@ public class UserServiceCustomLogger implements CustomLogger {
     }
 
     private OperationHistory createOperationHistory(String description, HttpServletRequest request) {
+        String params = request.getQueryString();
+        if (params == null) params = "nothing";
         return new OperationHistory(
                 description,
                 request.getRemoteAddr(),
                 request.getRequestURI(),
-                request.getQueryString(),
+                params,
                 LocalDateTime.now()
         );
     }
