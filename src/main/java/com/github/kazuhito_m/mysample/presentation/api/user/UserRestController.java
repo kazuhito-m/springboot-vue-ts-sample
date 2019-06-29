@@ -32,10 +32,17 @@ public class UserRestController {
         return userService.allUsers().list();
     }
 
-    @PostMapping
+    @PostMapping("/rowdata")
     @ResponseStatus(HttpStatus.CREATED)
     void register(@Valid User user) {
         userService.register(user);
+    }
+
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    void register(@Valid @RequestBody UserRegistrationResource resource) {
+        userService.register(resource.toUser());
     }
 
     @GetMapping("/genderTypes")
