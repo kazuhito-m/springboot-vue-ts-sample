@@ -19,19 +19,19 @@ public class UserTable {
 
     public User toUser() {
         return new User(
-            new UserIdentifier(this.userId),
-            new Name(this.name),
-            new DateOfBirth(this.dateOfBirth),
-            new Gender(GenderType.valueOf(this.gender)),
-            new PhoneNumber(this.phoneNumber)
+                new UserIdentifier(userId),
+                new Name(name),
+                new DateOfBirth(dateOfBirth),
+                new Gender(GenderType.valueOf(gender)),
+                new PhoneNumber(phoneNumber)
         );
     }
-    
+
     public UserSummary toUserSummary() {
         return new UserSummary(
-            new UserIdentifier(this.userId),
-            new Name(this.name),
-            new DateOfBirth(this.dateOfBirth)
+                new UserIdentifier(userId),
+                new Name(name),
+                new DateOfBirth(dateOfBirth)
         );
     }
 
@@ -45,11 +45,11 @@ public class UserTable {
 
     public UserTable(User user) {
         this(
-            user.identifier().value(),
-            user.name().toString(),
-            user.dateOfBirth().value(),
-            user.phoneNumber().toString(),
-            user.gender().toString()
+                user.identifier().value(),
+                user.name().toString(),
+                user.dateOfBirth().value(),
+                user.phoneNumber().toString(),
+                user.gender().toString()
         );
     }
 }
