@@ -1,4 +1,4 @@
-package com.github.kazuhito_m.mysample.presentation.api;
+package com.github.kazuhito_m.mysample.presentation;
 
 import org.springframework.validation.DataBinder;
 import org.springframework.web.bind.annotation.ControllerAdvice;
