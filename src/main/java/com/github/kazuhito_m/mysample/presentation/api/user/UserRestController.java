@@ -4,7 +4,9 @@ import com.github.kazuhito_m.mysample.application.service.user.UserService;
 import com.github.kazuhito_m.mysample.domain.model.user.GenderType;
 import com.github.kazuhito_m.mysample.domain.model.user.User;
 import com.github.kazuhito_m.mysample.domain.model.user.UserSummary;
+import com.github.kazuhito_m.mysample.presentation.api.Invalidate;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -43,6 +45,12 @@ public class UserRestController {
     @ResponseStatus(HttpStatus.CREATED)
     void register(@Valid @RequestBody UserRegistrationResource resource) {
         userService.register(resource.toUser());
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    Invalidate handleException(MethodArgumentNotValidException e) {
+        return new Invalidate(e, HttpStatus.BAD_REQUEST);
     }
 
     @GetMapping("/genderTypes")
