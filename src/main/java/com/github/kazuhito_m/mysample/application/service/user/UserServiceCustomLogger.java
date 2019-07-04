@@ -1,6 +1,5 @@
 package com.github.kazuhito_m.mysample.application.service.user;
 
-import com.github.kazuhito_m.mysample.application.service.aspect.JoinPointDumper;
 import com.github.kazuhito_m.mysample.application.service.logger.CustomLogger;
 import com.github.kazuhito_m.mysample.application.service.operationhistory.OperationHistoryService;
 import com.github.kazuhito_m.mysample.domain.model.operationhistory.OperationHistory;
@@ -16,8 +15,6 @@ import java.util.Optional;
 
 @Component
 public class UserServiceCustomLogger implements CustomLogger {
-    private static final Logger LOGGER = LoggerFactory.getLogger(UserServiceCustomLogger.class);
-
     private final OperationHistoryService operationHistoryService;
     private final RequestStocks requestStocks;
 
@@ -28,7 +25,7 @@ public class UserServiceCustomLogger implements CustomLogger {
 
     @Override
     public void afterMethod(JoinPoint joinPoint, Object returnValue, Throwable e) {
-        new JoinPointDumper().dumpLog(joinPoint);
+//        new JoinPointDumper().dumpLog(joinPoint);
         String methodName = joinPoint.getSignature().getName();
         if (methodName.equals("inServicePrivateMethod")) afterInServicePrivateMethod(joinPoint, returnValue);
     }

@@ -11,8 +11,6 @@ import static java.util.stream.Collectors.toList;
 
 @Repository
 public class UserDatasource implements UserRepository {
-    private static Logger LOGGER = LoggerFactory.getLogger(UserDatasource.class);
-
     final UserDao dao;
 
     @Override
@@ -43,7 +41,6 @@ public class UserDatasource implements UserRepository {
 
     @Override
     public void register(User user) {
-        LOGGER.info("登録前値L:" + user);
         dao.register(new UserTable(user));
     }
 
