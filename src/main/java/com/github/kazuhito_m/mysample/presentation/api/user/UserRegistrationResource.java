@@ -2,7 +2,6 @@ package com.github.kazuhito_m.mysample.presentation.api.user;
 
 import com.github.kazuhito_m.mysample.domain.model.user.*;
 import org.hibernate.validator.constraints.Email;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;

@@ -1,4 +1,4 @@
-package com.github.kazuhito_m.mysample.presentation.api;
+package com.github.kazuhito_m.mysample.presentation;
 
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
