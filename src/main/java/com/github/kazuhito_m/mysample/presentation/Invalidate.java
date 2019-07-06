@@ -2,6 +2,7 @@ package com.github.kazuhito_m.mysample.presentation;
 
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
+import org.seasar.doma.jdbc.UniqueConstraintException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.ObjectError;
@@ -64,5 +65,11 @@ public class Invalidate {
         String fieldName = firstRef.getFieldName();
         String value = ife.getValue().toString();
         return String.format("%s [%s:'%s']", message, fieldName, value);
+    }
+
+    public Invalidate(UniqueConstraintException e, HttpStatus httpStatus) {
+        status = httpStatus.value();
+        error = httpStatus.getReasonPhrase();
+        errorCause = "指定されたデータはすでに存在しています。";
     }
 }

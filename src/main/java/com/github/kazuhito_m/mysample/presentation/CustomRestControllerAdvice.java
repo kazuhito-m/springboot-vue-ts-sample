@@ -1,5 +1,6 @@
 package com.github.kazuhito_m.mysample.presentation;
 
+import org.seasar.doma.jdbc.UniqueConstraintException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.DataBinder;
@@ -26,5 +27,11 @@ public class CustomRestControllerAdvice {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     private Invalidate handleException(HttpMessageNotReadableException e) {
         return new Invalidate(e, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(UniqueConstraintException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    private Invalidate handleException(UniqueConstraintException e) {
+        return new Invalidate(e, HttpStatus.CONFLICT);
     }
 }
