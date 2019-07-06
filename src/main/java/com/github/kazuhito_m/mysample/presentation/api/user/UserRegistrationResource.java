@@ -20,7 +20,6 @@ public class UserRegistrationResource {
     String name;
 
     @NotNull(message = "誕生日を入力してください。")
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     LocalDate dateOfBirth;
 
     @NotNull(message = "性別を選択してください。")

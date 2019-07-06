@@ -6,6 +6,7 @@ import com.github.kazuhito_m.mysample.domain.model.user.User;
 import com.github.kazuhito_m.mysample.domain.model.user.UserSummary;
 import com.github.kazuhito_m.mysample.presentation.api.Invalidate;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
@@ -50,6 +51,12 @@ public class UserRestController {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     Invalidate handleException(MethodArgumentNotValidException e) {
+        return new Invalidate(e, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    Invalidate handleException(HttpMessageNotReadableException e) {
         return new Invalidate(e, HttpStatus.BAD_REQUEST);
     }
 

@@ -5,8 +5,6 @@ import com.github.kazuhito_m.mysample.application.service.operationhistory.Opera
 import com.github.kazuhito_m.mysample.domain.model.operationhistory.OperationHistory;
 import com.github.kazuhito_m.mysample.presentation.requeststock.RequestStocks;
 import org.aspectj.lang.JoinPoint;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
