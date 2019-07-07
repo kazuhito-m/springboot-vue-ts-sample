@@ -1,0 +1,1 @@
+SELECT nextval('operations.operation_histories_seq');

@@ -11,6 +11,7 @@ springboot-vue-ts-sample
   - Doma2
   - PostgreSQL
 - front end
+  - Nust.js
   - Vue.js
   - TypeScript
   - axios

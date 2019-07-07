@@ -1,6 +1,6 @@
 package com.github.kazuhito_m.mysample.presentation.api.user;
 
-import com.github.kazuhito_m.mysample.application.service.UserService;
+import com.github.kazuhito_m.mysample.application.service.user.UserService;
 import com.github.kazuhito_m.mysample.domain.model.user.GenderType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
