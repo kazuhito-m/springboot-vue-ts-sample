@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import javax.validation.ConstraintViolationException;
+
 @RestControllerAdvice
 public class CustomRestControllerAdvice {
     @InitBinder
@@ -34,6 +36,13 @@ public class CustomRestControllerAdvice {
     @ExceptionHandler(HttpMessageNotReadableException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     private Invalidate handleException(HttpMessageNotReadableException e) {
+        return new Invalidate(e, HttpStatus.BAD_REQUEST);
+    }
+
+
+    @ExceptionHandler(ConstraintViolationException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    private Invalidate handleException(ConstraintViolationException e) {
         return new Invalidate(e, HttpStatus.BAD_REQUEST);
     }
 

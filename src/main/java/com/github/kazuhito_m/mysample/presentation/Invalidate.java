@@ -10,7 +10,10 @@ import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 /**
  * Validationでerrorとなった場合のResponseBody。
@@ -57,6 +60,25 @@ public class Invalidate {
         String fieldName = firstRef.getFieldName();
         String value = ife.getValue().toString();
         return String.format("%s [%s:'%s']", message, fieldName, value);
+    }
+
+    public Invalidate(ConstraintViolationException e, HttpStatus httpStatus) {
+        this(errorCauseOf(e.getConstraintViolations()), httpStatus);
+    }
+
+    private static String errorCauseOf(Set<ConstraintViolation<?>> constraintViolations) {
+        return constraintViolations.stream()
+                .map(Invalidate::errorCauseOf)
+                .findFirst()
+                .orElse("原因不明。");
+    }
+
+    private static String errorCauseOf(ConstraintViolation violation) {
+        String message = violation.getMessage();
+        String fieldName = violation.getPropertyPath().toString()
+                .replaceAll("\\.value", "")
+                .replaceAll(".*\\.", "");
+        return String.format("%s [%s:'%s']", message, fieldName, violation.getInvalidValue());
     }
 
     public Invalidate(UniqueConstraintException e, HttpStatus httpStatus) {
