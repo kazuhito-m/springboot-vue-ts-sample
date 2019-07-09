@@ -2,8 +2,6 @@ package com.github.kazuhito_m.mysample.presentation.api.user;
 
 import com.github.kazuhito_m.mysample.application.service.user.UserService;
 import com.github.kazuhito_m.mysample.domain.model.user.GenderType;
-import com.github.kazuhito_m.mysample.domain.model.user.User;
-import com.github.kazuhito_m.mysample.domain.model.user.UserSummary;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,18 +24,6 @@ public class UserRestController {
                 .map(UserResponse::new)
                 .collect(toList());
     }
-
-    @GetMapping("/summaries")
-    List<UserSummary> userSummaries() {
-        return userService.allUsers().list();
-    }
-
-    @PostMapping("/rowdata")
-    @ResponseStatus(HttpStatus.CREATED)
-    void register(@Valid User user) {
-        userService.register(user);
-    }
-
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
