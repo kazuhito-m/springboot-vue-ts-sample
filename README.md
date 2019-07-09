@@ -37,9 +37,9 @@ springboot-vue-ts-sample
 
 ---
 
-0. DockerとFlywayでのDB初期化を追加
+1. DockerとFlywayでのDB初期化を追加
 0. バージョンの最新化確認
-    0. gradle wrapper
+    1. gradle wrapper
     0. Doma2
 
 # Usage
