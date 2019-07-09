@@ -1,6 +1,8 @@
 package com.github.kazuhito_m.mysample.infrastructure.datasource.user;
 
 import com.github.kazuhito_m.mysample.domain.model.user.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -14,8 +16,8 @@ public class UserDatasource implements UserRepository {
     @Override
     public User findBy(UserIdentifier id) {
         return dao.findBy(id.value())
-            .map(UserTable::toUser)
-            .get();
+                .map(UserTable::toUser)
+                .get();
     }
 
     @Override
@@ -26,9 +28,9 @@ public class UserDatasource implements UserRepository {
     @Override
     public UserSummaries list() {
         List<UserSummary> summaries = dao.list()
-            .stream()
-            .map(userTable -> userTable.toUserSummary())
-            .collect(toList());
+                .stream()
+                .map(userTable -> userTable.toUserSummary())
+                .collect(toList());
         return new UserSummaries(summaries);
     }
 

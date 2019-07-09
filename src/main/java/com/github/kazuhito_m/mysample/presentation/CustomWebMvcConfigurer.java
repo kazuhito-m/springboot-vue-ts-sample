@@ -1,4 +1,4 @@
-package com.github.kazuhito_m.mysample.presentation.api;
+package com.github.kazuhito_m.mysample.presentation;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.HttpMessageConverter;

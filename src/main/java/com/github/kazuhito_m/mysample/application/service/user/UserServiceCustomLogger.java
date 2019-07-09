@@ -1,13 +1,10 @@
 package com.github.kazuhito_m.mysample.application.service.user;
 
-import com.github.kazuhito_m.mysample.application.service.aspect.JoinPointDumper;
 import com.github.kazuhito_m.mysample.application.service.logger.CustomLogger;
 import com.github.kazuhito_m.mysample.application.service.operationhistory.OperationHistoryService;
 import com.github.kazuhito_m.mysample.domain.model.operationhistory.OperationHistory;
 import com.github.kazuhito_m.mysample.presentation.requeststock.RequestStocks;
 import org.aspectj.lang.JoinPoint;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,8 +13,6 @@ import java.util.Optional;
 
 @Component
 public class UserServiceCustomLogger implements CustomLogger {
-    private static final Logger LOGGER = LoggerFactory.getLogger(UserServiceCustomLogger.class);
-
     private final OperationHistoryService operationHistoryService;
     private final RequestStocks requestStocks;
 
@@ -28,7 +23,7 @@ public class UserServiceCustomLogger implements CustomLogger {
 
     @Override
     public void afterMethod(JoinPoint joinPoint, Object returnValue, Throwable e) {
-        new JoinPointDumper().dumpLog(joinPoint);
+//        new JoinPointDumper().dumpLog(joinPoint);
         String methodName = joinPoint.getSignature().getName();
         if (methodName.equals("inServicePrivateMethod")) afterInServicePrivateMethod(joinPoint, returnValue);
     }
@@ -45,11 +40,13 @@ public class UserServiceCustomLogger implements CustomLogger {
     }
 
     private OperationHistory createOperationHistory(String description, HttpServletRequest request) {
+        String params = request.getQueryString();
+        if (params == null) params = "nothing";
         return new OperationHistory(
                 description,
                 request.getRemoteAddr(),
                 request.getRequestURI(),
-                request.getQueryString(),
+                params,
                 LocalDateTime.now()
         );
     }
