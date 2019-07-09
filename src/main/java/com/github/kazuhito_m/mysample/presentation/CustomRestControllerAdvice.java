@@ -3,6 +3,7 @@ package com.github.kazuhito_m.mysample.presentation;
 import org.seasar.doma.jdbc.UniqueConstraintException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.validation.BindException;
 import org.springframework.validation.DataBinder;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -15,6 +16,12 @@ public class CustomRestControllerAdvice {
     @InitBinder
     private void initDirectFieldAccess(DataBinder dataBinder) {
         dataBinder.initDirectFieldAccess();
+    }
+
+    @ExceptionHandler(BindException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    private Invalidate handleException(BindException e) {
+        return new Invalidate(e, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
