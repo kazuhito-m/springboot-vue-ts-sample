@@ -32,3 +32,13 @@ CREATE TABLE operations.operation_histories (
 );
 
 CREATE SEQUENCE operations.operation_histories_seq;
+
+DROP SCHEMA IF EXISTS profiles;
+CREATE SCHEMA profiles;
+
+DROP TABLE IF EXISTS profiles.profile_images;
+CREATE TABLE profiles.profile_images (
+  user_id VARCHAR(255) PRIMARY KEY,
+  image_binary bytea NOT NULL,
+  FOREIGN KEY (user_id) REFERENCES users.users (user_id)
+);
