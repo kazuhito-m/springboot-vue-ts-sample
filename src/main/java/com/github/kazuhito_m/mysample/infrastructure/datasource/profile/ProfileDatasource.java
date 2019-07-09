@@ -2,17 +2,28 @@ package com.github.kazuhito_m.mysample.infrastructure.datasource.profile;
 
 import com.github.kazuhito_m.mysample.domain.model.profile.ProfileImage;
 import com.github.kazuhito_m.mysample.domain.model.profile.ProfileRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.github.kazuhito_m.mysample.domain.model.user.UserIdentifier;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public class ProfileDatasource implements ProfileRepository {
-    private static final Logger LOGGER = LoggerFactory.getLogger(ProfileDatasource.class);
+    final ProfileImageDao profileImageDao;
 
     @Override
     public void registerImage(ProfileImage image) {
-        // TODO 実装。
-        LOGGER.info("送信されてきたデータサイズ:" + image.binary().value().length);
+        ProfileImageTable record = new ProfileImageTable(image);
+        profileImageDao.delete(record);
+        profileImageDao.register(record);
+    }
+
+    @Override
+    public ProfileImage findBy(UserIdentifier id) {
+        return profileImageDao.findBy(id.value())
+                .map(ProfileImageTable::toProfileImage)
+                .get();
+    }
+
+    public ProfileDatasource(ProfileImageDao profileImageDao) {
+        this.profileImageDao = profileImageDao;
     }
 }

@@ -18,6 +18,6 @@ public interface ProfileImageDao {
     @Insert
     Result<ProfileImageTable> register(ProfileImageTable profileImage);
 
-    @Delete(sqlFile = true)
-    int delete(String userId);
+    @Delete
+    Result<ProfileImageTable> delete(ProfileImageTable profileImage);
 }
