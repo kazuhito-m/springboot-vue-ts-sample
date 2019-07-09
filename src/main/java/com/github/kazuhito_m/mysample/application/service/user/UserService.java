@@ -14,8 +14,8 @@ public class UserService {
         return userRepository.findBy(id);
     }
 
-    public Boolean isExist(User user) {
-        return userRepository.isExist(user);
+    public Boolean isExist(UserIdentifier userIdentifier) {
+        return userRepository.isExist(userIdentifier);
     }
 
     public UserSummaries allUsers() {

@@ -1,8 +1,6 @@
 package com.github.kazuhito_m.mysample.infrastructure.datasource.user;
 
 import com.github.kazuhito_m.mysample.domain.model.user.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -21,8 +19,8 @@ public class UserDatasource implements UserRepository {
     }
 
     @Override
-    public boolean isExist(User user) {
-        return dao.findBy(user.identifier().value()).isPresent();
+    public boolean isExist(UserIdentifier identifier) {
+        return dao.findBy(identifier.value()).isPresent();
     }
 
     @Override

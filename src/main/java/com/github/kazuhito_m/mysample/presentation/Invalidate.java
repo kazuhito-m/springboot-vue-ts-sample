@@ -2,6 +2,7 @@ package com.github.kazuhito_m.mysample.presentation;
 
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
+import com.github.kazuhito_m.mysample.domain.basic.DataNotExistsException;
 import org.seasar.doma.jdbc.UniqueConstraintException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -20,10 +21,14 @@ public class Invalidate {
     final String error;
     final String errorCause;
 
-    public Invalidate(BindException e, HttpStatus httpStatus) {
+    private Invalidate(String errorCause, HttpStatus httpStatus) {
         status = httpStatus.value();
         error = httpStatus.getReasonPhrase();
-        errorCause = errorCauseOf(e.getFieldError());
+        this.errorCause = errorCause;
+    }
+
+    public Invalidate(BindException e, HttpStatus httpStatus) {
+        this(errorCauseOf(e.getFieldError()), httpStatus);
     }
 
     private static String errorCauseOf(FieldError invalid) {
@@ -36,18 +41,14 @@ public class Invalidate {
 
 
     public Invalidate(MethodArgumentNotValidException e, HttpStatus httpStatus) {
-        status = httpStatus.value();
-        error = httpStatus.getReasonPhrase();
-        errorCause = errorCauseOf(e.getBindingResult().getFieldError());
+        this(errorCauseOf(e.getBindingResult().getFieldError()), httpStatus);
     }
 
     public Invalidate(HttpMessageNotReadableException e, HttpStatus httpStatus) {
-        status = httpStatus.value();
-        error = httpStatus.getReasonPhrase();
-        errorCause = errorCauseOf(e);
+        this(errorCauseOf(e), httpStatus);
     }
 
-    private String errorCauseOf(HttpMessageNotReadableException e) {
+    private static String errorCauseOf(HttpMessageNotReadableException e) {
         if (!(e.getCause() instanceof InvalidFormatException)) return "書式が正しくありません。";
 
         InvalidFormatException ife = (InvalidFormatException) e.getCause();
@@ -59,8 +60,10 @@ public class Invalidate {
     }
 
     public Invalidate(UniqueConstraintException e, HttpStatus httpStatus) {
-        status = httpStatus.value();
-        error = httpStatus.getReasonPhrase();
-        errorCause = "指定されたデータはすでに存在しています。";
+        this("指定されたデータはすでに存在しています。", httpStatus);
+    }
+
+    public Invalidate(DataNotExistsException e, HttpStatus httpStatus) {
+        this("指定されたデータは存在しません。", httpStatus);
     }
 }

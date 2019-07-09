@@ -1,5 +1,6 @@
 package com.github.kazuhito_m.mysample.presentation;
 
+import com.github.kazuhito_m.mysample.domain.basic.DataNotExistsException;
 import org.seasar.doma.jdbc.UniqueConstraintException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -40,5 +41,11 @@ public class CustomRestControllerAdvice {
     @ResponseStatus(HttpStatus.CONFLICT)
     private Invalidate handleException(UniqueConstraintException e) {
         return new Invalidate(e, HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler(DataNotExistsException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    private Invalidate handleException(DataNotExistsException e) {
+        return new Invalidate(e, HttpStatus.NOT_FOUND);
     }
 }
