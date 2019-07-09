@@ -7,6 +7,7 @@ import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.BindException;
 import org.springframework.validation.DataBinder;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -45,6 +46,13 @@ public class CustomRestControllerAdvice {
     private Invalidate handleException(ConstraintViolationException e) {
         return new Invalidate(e, HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(MissingServletRequestParameterException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    private Invalidate handleException(MissingServletRequestParameterException e) {
+        return new Invalidate(e, HttpStatus.BAD_REQUEST);
+    }
+
 
     @ExceptionHandler(UniqueConstraintException.class)
     @ResponseStatus(HttpStatus.CONFLICT)

@@ -9,6 +9,7 @@ import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
@@ -41,7 +42,6 @@ public class Invalidate {
         String fieldName = invalid.getField();
         return String.format("%s [%s:'%s']", message, fieldName, invalid.getRejectedValue());
     }
-
 
     public Invalidate(MethodArgumentNotValidException e, HttpStatus httpStatus) {
         this(errorCauseOf(e.getBindingResult().getFieldError()), httpStatus);
@@ -79,6 +79,10 @@ public class Invalidate {
                 .replaceAll("\\.value", "")
                 .replaceAll(".*\\.", "");
         return String.format("%s [%s:'%s']", message, fieldName, violation.getInvalidValue());
+    }
+
+    public Invalidate(MissingServletRequestParameterException e, HttpStatus httpStatus) {
+        this(String.format("%s [%s]", "必須パラメータが指定されていません。", e.getParameterName()), httpStatus);
     }
 
     public Invalidate(UniqueConstraintException e, HttpStatus httpStatus) {
