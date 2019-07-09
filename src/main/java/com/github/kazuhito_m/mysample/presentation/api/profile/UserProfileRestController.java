@@ -6,6 +6,7 @@ import com.github.kazuhito_m.mysample.domain.basic.DataNotExistsException;
 import com.github.kazuhito_m.mysample.domain.model.profile.ProfileImage;
 import com.github.kazuhito_m.mysample.domain.model.user.UserIdentifier;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
@@ -14,6 +15,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
 @RestController
+@Validated
 @RequestMapping("/api/user/profile/image")
 public class UserProfileRestController {
     final UserService userService;
