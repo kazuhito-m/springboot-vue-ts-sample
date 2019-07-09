@@ -23,6 +23,11 @@ public class ProfileDatasource implements ProfileRepository {
                 .get();
     }
 
+    @Override
+    public boolean isExist(UserIdentifier identifier) {
+        return profileImageDao.findBy(identifier.value()).isPresent();
+    }
+
     public ProfileDatasource(ProfileImageDao profileImageDao) {
         this.profileImageDao = profileImageDao;
     }

@@ -6,4 +6,6 @@ public interface ProfileRepository {
     void registerImage(ProfileImage image);
 
     ProfileImage findBy(UserIdentifier id);
+
+    boolean isExist(UserIdentifier userIdentifier);
 }
