@@ -3,7 +3,7 @@ package com.github.kazuhito_m.mysample.domain.model.user;
 public interface UserRepository {
     User findBy(UserIdentifier id);
 
-    boolean isExist(User user);
+    boolean isExist(UserIdentifier identifier);
 
     UserSummaries list();
 

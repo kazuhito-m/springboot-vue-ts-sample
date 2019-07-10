@@ -10,7 +10,6 @@ import org.seasar.doma.jdbc.Result;
 import java.util.List;
 import java.util.Optional;
 
-
 @ConfigAutowireable
 @Dao
 public interface UserDao {
