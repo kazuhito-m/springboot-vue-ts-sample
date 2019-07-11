@@ -26,26 +26,21 @@ public class DataSourceConfig {
     @Bean(name = {"dataSource", "selfDataSource"})
     public DataSource dataSource() {
         Config config = configRepository.get();
-        Datasource main = config.mainDatasource();
-
-        DataSourceBuilder builder = DataSourceBuilder.create();
-        builder.driverClassName(main.driverClassName());
-        builder.url(main.url());
-        builder.username(main.name());
-        builder.password(main.password());
-        return builder.build();
+        return buildDataSource(config.mainDatasource());
     }
 
     @Bean(name = "logDataSource")
     public DataSource logDataSource() {
         Config config = configRepository.get();
-        Datasource log = config.logDatasource();
+        return buildDataSource(config.logDatasource());
+    }
 
+    private DataSource buildDataSource(Datasource dbConfig) {
         DataSourceBuilder builder = DataSourceBuilder.create();
-        builder.driverClassName(log.driverClassName());
-        builder.url(log.url());
-        builder.username(log.name());
-        builder.password(log.password());
+        builder.driverClassName(dbConfig.driverClassName());
+        builder.url(dbConfig.url());
+        builder.username(dbConfig.name());
+        builder.password(dbConfig.password());
         return builder.build();
     }
 
@@ -56,10 +51,10 @@ public class DataSourceConfig {
         ResourceDatabasePopulator databasePopulator = new ResourceDatabasePopulator();
 
         Resource resource = context.getResource("classpath:schema-log.sql");
-        if (resource == null || !resource.exists()) {
-            LOGGER.debug("DBスキーマ初期化ファイル:schema-log.sql が見つかりませんでした。初期化は行いません");
-        } else {
+        if (resource != null && resource.exists()) {
             databasePopulator.addScript(resource);
+        } else {
+            LOGGER.debug("DBスキーマ初期化ファイル:schema-log.sql が見つかりませんでした。初期化は行いません");
         }
 
         dataSourceInitializer.setDatabasePopulator(databasePopulator);

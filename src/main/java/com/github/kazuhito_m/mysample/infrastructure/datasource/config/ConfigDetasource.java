@@ -27,7 +27,6 @@ public class ConfigDetasource implements ConfigRepository {
     }
 
     private Config createConfigBy(Properties properties) {
-        String prefix = "main.datasource.";
         Datasource main = createDatasourceOf("main.datasource.", properties);
         Datasource log = createDatasourceOf("log.datasource.", properties);
         return new Config(main, log);
