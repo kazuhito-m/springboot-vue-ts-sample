@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
 
-@Component("configForConnectToLogDatabase")
+@Component
 public class ConfigForConnectToLogDatabase implements Config {
     final DataSource dataSource;
     final Dialect dialect;
