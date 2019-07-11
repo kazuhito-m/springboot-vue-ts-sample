@@ -8,7 +8,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -23,28 +22,28 @@ public class ConfigDetasource implements ConfigRepository {
 
     @Override
     public Config get() {
-        LOGGER.info("設定値はきている？ " + configFilePath);
-
-        String path = new File(".").getAbsoluteFile().getParent();
-        LOGGER.info(path);
-        LOGGER.info(System.getProperty("user.dir"));
-        LOGGER.info("getParent: " + configFilePath.getParent());
-
-        LOGGER.info("ファイル:" + configFilePath + "は存在する？:" + Files.exists(configFilePath));
-
         Properties properties = loadPropertiesOf(configFilePath);
-        LOGGER.info("まずとれてるか？" + properties);
-        LOGGER.info("期待されてる値が取れるか？" + properties.getProperty("main.datasource.driver-class-name"));
+        return createConfigBy(properties);
+    }
 
-        // TODO 実装。以下は仮。
-        return new Config(
-                new Datasource(
-                        "org.h2.Driver",
-                        "jdbc:h2:mem:testdb;MODE=PostgreSQL",
-                        "sa",
-                        "sa"
-                )
+    private Config createConfigBy(Properties properties) {
+        String prefix = "main.datasource.";
+        Datasource main = new Datasource(
+                propertyOf(prefix + "driver-class-name", properties),
+                propertyOf(prefix + "url", properties),
+                propertyOf(prefix + "name", properties),
+                propertyOf(prefix + "password", properties)
         );
+        return new Config(main);
+    }
+
+    private String propertyOf(String name, Properties properties) {
+        String value = properties.getProperty(name);
+        if (value == null) {
+            String message = String.format("設定ファイルから期待した値が読めませんでした。key=%s, file=%s", name, configFilePath);
+            throw new IllegalStateException(message);
+        }
+        return value;
     }
 
     private Properties loadPropertiesOf(Path path) {
@@ -53,7 +52,7 @@ public class ConfigDetasource implements ConfigRepository {
             properties.load(stream);
             return properties;
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("外部設定ファイルの読み込みに失敗しました。- " + path, e);
         }
     }
 
