@@ -8,6 +8,9 @@ import org.springframework.stereotype.Repository;
 
 import static org.seasar.doma.AnnotationTarget.*;
 
+/**
+ * 2つ目のDB(Log用DB)に接続したい際にDoma2のDaoに付与するアノテーション。
+ */
 @AnnotateWith(annotations = {
         @Annotation(target = CLASS, type = Repository.class),
         @Annotation(target = CONSTRUCTOR_PARAMETER, type = Qualifier.class, elements = "\"configForConnectToLogDatabase\""),
