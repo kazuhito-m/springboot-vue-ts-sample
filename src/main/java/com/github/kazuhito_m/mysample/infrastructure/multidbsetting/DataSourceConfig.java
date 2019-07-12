@@ -39,7 +39,7 @@ public class DataSourceConfig {
         DataSourceBuilder builder = DataSourceBuilder.create();
         builder.driverClassName(dbConfig.driverClassName());
         builder.url(dbConfig.url());
-        builder.username(dbConfig.name());
+        builder.username(dbConfig.username());
         builder.password(dbConfig.password());
         return builder.build();
     }

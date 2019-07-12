@@ -36,7 +36,7 @@ public class ConfigDetasource implements ConfigRepository {
         return new Datasource(
                 propertyOf(prefix + "driver-class-name", properties),
                 propertyOf(prefix + "url", properties),
-                propertyOf(prefix + "name", properties),
+                propertyOf(prefix + "username", properties),
                 propertyOf(prefix + "password", properties)
         );
     }

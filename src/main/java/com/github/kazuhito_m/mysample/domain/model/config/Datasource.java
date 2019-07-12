@@ -14,7 +14,7 @@ public class Datasource {
         return url;
     }
 
-    public String name() {
+    public String username() {
         return name;
     }
 
