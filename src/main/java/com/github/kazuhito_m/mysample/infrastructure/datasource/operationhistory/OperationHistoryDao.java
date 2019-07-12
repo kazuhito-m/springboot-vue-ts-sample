@@ -1,6 +1,6 @@
 package com.github.kazuhito_m.mysample.infrastructure.datasource.operationhistory;
 
-import com.github.kazuhito_m.mysample.infrastructure.datasource.ConfigAutowireableForConnectToLogDatabase;
+import com.github.kazuhito_m.mysample.infrastructure.multidbsetting.ConfigAutowireableForConnectToLogDatabase;
 import org.seasar.doma.Dao;
 import org.seasar.doma.Insert;
 import org.seasar.doma.Select;

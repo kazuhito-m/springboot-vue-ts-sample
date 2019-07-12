@@ -1,4 +1,4 @@
-package com.github.kazuhito_m.mysample.infrastructure.datasource;
+package com.github.kazuhito_m.mysample.infrastructure.multidbsetting;
 
 import org.seasar.doma.AnnotateWith;
 import org.seasar.doma.Annotation;

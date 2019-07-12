@@ -1,4 +1,4 @@
-package com.github.kazuhito_m.mysample.infrastructure.datasource;
+package com.github.kazuhito_m.mysample.infrastructure.multidbsetting;
 
 import com.github.kazuhito_m.mysample.domain.model.config.Config;
 import com.github.kazuhito_m.mysample.domain.model.config.ConfigRepository;
