@@ -27,14 +27,18 @@ public class ConfigDetasource implements ConfigRepository {
     }
 
     private Config createConfigBy(Properties properties) {
-        String prefix = "main.datasource.";
-        Datasource main = new Datasource(
+        Datasource main = createDatasourceOf("main.datasource.", properties);
+        Datasource log = createDatasourceOf("log.datasource.", properties);
+        return new Config(main, log);
+    }
+
+    private Datasource createDatasourceOf(String prefix, Properties properties) {
+        return new Datasource(
                 propertyOf(prefix + "driver-class-name", properties),
                 propertyOf(prefix + "url", properties),
                 propertyOf(prefix + "name", properties),
                 propertyOf(prefix + "password", properties)
         );
-        return new Config(main);
     }
 
     private String propertyOf(String name, Properties properties) {

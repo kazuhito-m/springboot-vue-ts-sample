@@ -9,8 +9,8 @@ import org.seasar.doma.jdbc.Result;
 
 import java.util.Optional;
 
-@ConfigAutowireable
 @Dao
+@ConfigAutowireable
 public interface ProfileImageDao {
     @Select
     Optional<ProfileImageTable> findBy(String userId);
