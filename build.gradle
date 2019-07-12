@@ -68,6 +68,7 @@ dependencies {
     implementation("org.seasar.doma:doma:2.24.0")
     implementation("org.seasar.doma.boot:doma-spring-boot-starter:1.1.1")
     implementation("org.springframework.boot:spring-boot-starter-jdbc")
+    implementation("org.flywaydb:flyway-core:5.2.4")
 
     runtime("com.h2database:h2:1.4.196")
 
