@@ -37,7 +37,7 @@ public class RequestStocks {
 
     public Optional<HttpServletRequest> get() {
         long threadId = Thread.currentThread().getId();
-        return Optional.of(requests.get(threadId));
+        return Optional.ofNullable(requests.get(threadId));
     }
 
     public int size() {
