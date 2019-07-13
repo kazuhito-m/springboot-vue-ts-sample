@@ -23,13 +23,13 @@ public class DataSourceConfig {
     private final ConfigRepository configRepository;
     private final ApplicationContext context;
 
-    @Bean(name = {"dataSource", "selfDataSource"})
+    @Bean("dataSource")
     public DataSource dataSource() {
         Config config = configRepository.get();
         return buildDataSource(config.mainDatasource());
     }
 
-    @Bean(name = "logDataSource")
+    @Bean("logDataSource")
     public DataSource logDataSource() {
         Config config = configRepository.get();
         return buildDataSource(config.logDatasource());
@@ -44,7 +44,7 @@ public class DataSourceConfig {
         return builder.build();
     }
 
-    @Bean(name = "logDataSourceInitializer")
+    @Bean("logDataSourceInitializer")
     public DataSourceInitializer logDataSourceInitializer(@Qualifier("logDataSource") DataSource dataSource) {
         DataSourceInitializer dataSourceInitializer = new DataSourceInitializer();
         dataSourceInitializer.setDataSource(dataSource);
