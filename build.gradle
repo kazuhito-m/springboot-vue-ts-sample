@@ -2,7 +2,7 @@ buildscript {
     ext {
         springBootVersion = '2.1.6.RELEASE'
         encoding = 'UTF-8'
-        compatibility = 1.11
+        compatibility = JavaVersion.VERSION_12
         aspectjVersion = '1.9.4'
     }
     repositories {
@@ -64,8 +64,9 @@ compileAspect.dependsOn processResources
 
 dependencies {
     implementation('org.springframework.boot:spring-boot-starter-web')
-    annotationProcessor("org.seasar.doma:doma:2.24.0")
-    implementation("org.seasar.doma:doma:2.24.0")
+    def doma = 'org.seasar.doma:doma:2.24.0'
+    implementation(doma)
+    annotationProcessor(doma)
     implementation("org.seasar.doma.boot:doma-spring-boot-starter:1.1.1")
     implementation("org.springframework.boot:spring-boot-starter-jdbc")
     implementation("org.flywaydb:flyway-core:6.0.0-beta2")
