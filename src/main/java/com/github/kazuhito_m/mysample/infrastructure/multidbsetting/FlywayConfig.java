@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 public class FlywayConfig {
     private static final Logger LOGGER = LoggerFactory.getLogger(FlywayConfig.class);
 
-    @Bean(initMethod = "migrate")
+    @Bean(name = "flyway", initMethod = "migrate")
     @FlywayDataSource
     @Primary
     public Flyway primaryFlyway(@Qualifier("maindbFlywayProperties") FlywayProperties properties,
