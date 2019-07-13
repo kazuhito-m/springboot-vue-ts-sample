@@ -8,7 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.jdbc.Sql;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Propagation;
@@ -19,10 +19,9 @@ import static org.hamcrest.Matchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@RunWith(SpringJUnit4ClassRunner.class)
+@RunWith(SpringRunner.class)
 @SpringBootTest
 @Transactional(propagation = Propagation.NOT_SUPPORTED)
-@Sql("classpath:clear-transaction-data.sql")
 public class UserRestControllerTest {
     @Autowired
     WebApplicationContext webApplicationContext;
@@ -38,16 +37,18 @@ public class UserRestControllerTest {
     }
 
     @Test
+    @Sql("classpath:clear-transaction-data.sql")
+    @Sql("initialize-users.sql")
     public void ユーザ情報の一覧を取得できる() throws Exception {
         mvc.perform(get("/api/user"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(jsonPath("$[0].userIdentifier", is("fujimura_kaoru@example.com")))
-                .andExpect(jsonPath("$[0].name", is("藤村 薫")))
+                .andExpect(jsonPath("$[0].userIdentifier", is("x01.one@example.com")))
+                .andExpect(jsonPath("$[0].name", is("勇座 一人")))
                 .andExpect(jsonPath("$[0].age", is(31)))
-                .andExpect(jsonPath("$[5].userIdentifier", is("yamato_michiko@example.com")))
-                .andExpect(jsonPath("$[5].name", is("大和 路子")))
-                .andExpect(jsonPath("$[5].age", is(31)))
+                .andExpect(jsonPath("$[2].userIdentifier", is("x03.three@example.com")))
+                .andExpect(jsonPath("$[2].name", is("勇座 酸忍")))
+                .andExpect(jsonPath("$[2].age", is(219)))
         ;
     }
 }
