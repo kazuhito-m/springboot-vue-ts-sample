@@ -16,6 +16,9 @@ import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 
 import javax.sql.DataSource;
 
+/**
+ * 複数データベースかつ接続情報を設定ファイル以外から取得するコンフィグ。
+ */
 @Configuration
 public class DataSourceConfig {
     private static final Logger LOGGER = LoggerFactory.getLogger(DataSourceConfig.class);
@@ -23,13 +26,13 @@ public class DataSourceConfig {
     private final ConfigRepository configRepository;
     private final ApplicationContext context;
 
-    @Bean(name = {"dataSource", "selfDataSource"})
+    @Bean("dataSource")
     public DataSource dataSource() {
         Config config = configRepository.get();
         return buildDataSource(config.mainDatasource());
     }
 
-    @Bean(name = "logDataSource")
+    @Bean("logDataSource")
     public DataSource logDataSource() {
         Config config = configRepository.get();
         return buildDataSource(config.logDatasource());
@@ -39,27 +42,31 @@ public class DataSourceConfig {
         DataSourceBuilder builder = DataSourceBuilder.create();
         builder.driverClassName(dbConfig.driverClassName());
         builder.url(dbConfig.url());
-        builder.username(dbConfig.name());
+        builder.username(dbConfig.username());
         builder.password(dbConfig.password());
         return builder.build();
     }
 
-    @Bean(name = "logDataSourceInitializer")
+    @Bean("logDataSourceInitializer")
     public DataSourceInitializer logDataSourceInitializer(@Qualifier("logDataSource") DataSource dataSource) {
         DataSourceInitializer dataSourceInitializer = new DataSourceInitializer();
         dataSourceInitializer.setDataSource(dataSource);
-        ResourceDatabasePopulator databasePopulator = new ResourceDatabasePopulator();
 
-        Resource resource = context.getResource("classpath:schema-log.sql");
-        if (resource != null && resource.exists()) {
-            databasePopulator.addScript(resource);
-        } else {
-            LOGGER.debug("DBスキーマ初期化ファイル:schema-log.sql が見つかりませんでした。初期化は行いません");
-        }
+        ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
+        searchAndRegisterExecuteSql("schema-log.sql", "DBスキーマ初期化ファイル", populator);
+        searchAndRegisterExecuteSql("data-log.sql", "DBデータ初期化ファイル", populator);
+        dataSourceInitializer.setDatabasePopulator(populator);
 
-        dataSourceInitializer.setDatabasePopulator(databasePopulator);
         dataSourceInitializer.setEnabled(true);
         return dataSourceInitializer;
+    }
+
+    private void searchAndRegisterExecuteSql(String fileName, String description, ResourceDatabasePopulator populator) {
+        Resource resource = context.getResource("classpath:" + fileName);
+        if (resource != null && resource.exists()) populator.addScript(resource);
+
+        String template = "%s:%s が見つかりませんでした。初期化は行いません。";
+        LOGGER.debug(String.format(template, description, fileName));
     }
 
     public DataSourceConfig(ConfigRepository configRepository, ApplicationContext context) {

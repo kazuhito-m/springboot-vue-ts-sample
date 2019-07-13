@@ -1,0 +1,6 @@
+postgres-jikei:
+  build: "."
+  ports:
+    - "5432:5432"
+  container_name: "postgres-sample"
+  restart: "unless-stopped"

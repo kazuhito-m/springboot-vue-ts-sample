@@ -11,6 +11,9 @@ import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
 
+/**
+ * doma2で複数データベースへ接続する際の2つ目のDB(LogDB)への設定。
+ */
 @Component
 public class ConfigForConnectToLogDatabase implements Config {
     final DataSource dataSource;
