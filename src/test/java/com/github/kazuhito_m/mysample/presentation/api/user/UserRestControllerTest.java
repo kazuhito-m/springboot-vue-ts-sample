@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -21,11 +22,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
 @Transactional(propagation = Propagation.NOT_SUPPORTED)
+@Sql("classpath:clear-transaction-data.sql")
 public class UserRestControllerTest {
     @Autowired
     WebApplicationContext webApplicationContext;
+
     @Autowired
     JdbcTemplate jdbcTemplate;
+
     MockMvc mvc;
 
     @Before
