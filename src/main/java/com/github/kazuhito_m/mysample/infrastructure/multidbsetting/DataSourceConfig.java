@@ -10,6 +10,7 @@ import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.core.io.Resource;
 import org.springframework.jdbc.datasource.init.DataSourceInitializer;
 import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
@@ -27,6 +28,7 @@ public class DataSourceConfig {
     private final ApplicationContext context;
 
     @Bean("dataSource")
+    @Primary
     public DataSource dataSource() {
         Config config = configRepository.get();
         return buildDataSource(config.mainDatasource());
