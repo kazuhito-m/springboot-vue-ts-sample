@@ -16,6 +16,9 @@ import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 
 import javax.sql.DataSource;
 
+/**
+ * 複数データベースかつ接続情報を設定ファイル以外から取得するコンフィグ。
+ */
 @Configuration
 public class DataSourceConfig {
     private static final Logger LOGGER = LoggerFactory.getLogger(DataSourceConfig.class);

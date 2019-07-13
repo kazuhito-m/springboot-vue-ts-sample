@@ -15,6 +15,9 @@ import org.springframework.context.annotation.Primary;
 import javax.sql.DataSource;
 import java.util.stream.Collectors;
 
+/**
+ * 複数データベースかつ接続情報を設定ファイル以外から取得している場合のFlywayマイグレーションのコンフィグ。
+ */
 @Configuration
 public class FlywayConfig {
     private static final Logger LOGGER = LoggerFactory.getLogger(FlywayConfig.class);
@@ -53,13 +56,13 @@ public class FlywayConfig {
         return conf;
     }
 
-    @Bean(name = "maindbFlywayProperties")
+    @Bean("maindbFlywayProperties")
     @ConfigurationProperties(prefix = "maindb.flyway")
     public FlywayProperties maindbFlywayProperties() {
         return new FlywayProperties();
     }
 
-    @Bean(name = "logdbFlywayProperties")
+    @Bean("logdbFlywayProperties")
     @ConfigurationProperties(prefix = "logdb.flyway")
     public FlywayProperties logdbFlywayProperties() {
         return new FlywayProperties();
