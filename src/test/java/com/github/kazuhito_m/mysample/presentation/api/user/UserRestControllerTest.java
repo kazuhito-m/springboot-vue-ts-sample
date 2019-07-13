@@ -12,6 +12,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -83,6 +84,23 @@ public class UserRestControllerTest {
         assertThat(one.get("user_id")).isEqualTo("xxxxxxxxxxxa.kazuhito.sumpic@example.com");
         assertThat(one.get("date_of_birth").toString()).isEqualTo("1977-08-17");
         assertThat(one.get("gender")).isEqualTo("女性");
+    }
+
+    @Test
+    public void ユーザの追加でJSONに不備が在った場合404と理由を返す() throws Exception {
+        String userRegisterJson = loadTextOf("userRegisterFail.json");
+        MvcResult result = mvc.perform(
+                post("/api/user")
+                        .content(userRegisterJson)
+                        .contentType(MediaType.APPLICATION_JSON_UTF8)
+                        .accept(MediaType.APPLICATION_JSON_UTF8)
+        )
+                .andExpect(status().isBadRequest())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(content().json("{errorCause: \"名前は1文字以上40文字以内で入力してください。 [name:'三浦 一仁xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx']\"}"))
+                .andReturn();
+        
+        LOGGER.info(result.getResponse().getContentAsString()); // 本当は要らない…がデバッグ時の例として。
     }
 
     private String loadTextOf(String name) throws URISyntaxException, IOException {
