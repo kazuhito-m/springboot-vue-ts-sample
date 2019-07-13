@@ -19,18 +19,6 @@ import java.util.stream.Collectors;
 public class FlywayConfig {
     private static final Logger LOGGER = LoggerFactory.getLogger(FlywayConfig.class);
 
-    @Bean(name = "maindbFlywayProperties")
-    @ConfigurationProperties(prefix = "maindb.flyway")
-    public FlywayProperties maindbFlywayProperties() {
-        return new FlywayProperties();
-    }
-
-    @Bean(name = "logdbFlywayProperties")
-    @ConfigurationProperties(prefix = "logdb.flyway")
-    public FlywayProperties logdbFlywayProperties() {
-        return new FlywayProperties();
-    }
-
     @Bean(initMethod = "migrate")
     @FlywayDataSource
     @Primary
@@ -59,5 +47,17 @@ public class FlywayConfig {
         conf.setEncoding(properties.getEncoding());
         conf.setLocationsAsStrings(properties.getLocations().toArray(new String[]{}));
         return conf;
+    }
+
+    @Bean(name = "maindbFlywayProperties")
+    @ConfigurationProperties(prefix = "maindb.flyway")
+    public FlywayProperties maindbFlywayProperties() {
+        return new FlywayProperties();
+    }
+
+    @Bean(name = "logdbFlywayProperties")
+    @ConfigurationProperties(prefix = "logdb.flyway")
+    public FlywayProperties logdbFlywayProperties() {
+        return new FlywayProperties();
     }
 }
