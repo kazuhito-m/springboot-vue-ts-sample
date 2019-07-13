@@ -35,6 +35,10 @@ public class FlywayConfig {
     }
 
     private Flyway createFlywayOf(FlywayProperties properties, DataSource dataSource, String description) {
+        if (!properties.isEnabled()) {
+            LOGGER.info(description + " 用のDBマイグレーション(Flyway)が設定により無効化されています。マイグレーションは行いません。");
+            return null;
+        }
         ClassicConfiguration conf = convertFlywayConfigurationOf(properties, dataSource);
         Flyway flyway = new Flyway(conf);
         LOGGER.info(description + " 用のDBマイグレーション(Flyway)設定を行いました。マイグレーションファイル群:" + properties.getLocations().stream().collect(Collectors.joining(",")));
