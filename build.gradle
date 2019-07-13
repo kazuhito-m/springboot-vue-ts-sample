@@ -70,6 +70,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-jdbc")
     implementation("org.flywaydb:flyway-core:6.0.0-beta2")
 
+    runtime('org.postgresql:postgresql:42.2.6')
     runtime("com.h2database:h2:1.4.196")
 
     testImplementation('org.springframework.boot:spring-boot-starter-test')
