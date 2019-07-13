@@ -52,7 +52,7 @@ public class UserRestControllerTest {
 
     @Test
     @Sql("classpath:clear-transaction-data.sql")
-    @Sql("initialize-users.sql")
+    @Sql("add-initial-users.sql")
     public void ユーザ情報の一覧を取得できる() throws Exception {
         mvc.perform(get("/api/user"))
                 .andExpect(status().isOk())
@@ -99,7 +99,7 @@ public class UserRestControllerTest {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(content().json("{errorCause: \"名前は1文字以上40文字以内で入力してください。 [name:'三浦 一仁xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx']\"}"))
                 .andReturn();
-        
+
         LOGGER.info(result.getResponse().getContentAsString()); // 本当は要らない…がデバッグ時の例として。
     }
 
