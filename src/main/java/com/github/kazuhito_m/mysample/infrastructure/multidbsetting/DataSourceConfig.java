@@ -72,6 +72,7 @@ public class DataSourceConfig {
         dataSourceInitializer.setDatabasePopulator(populator);
 
         dataSourceInitializer.setEnabled(true);
+        dataSourceInitializer.afterPropertiesSet();
         return dataSourceInitializer;
     }
 
