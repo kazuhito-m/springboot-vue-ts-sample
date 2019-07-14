@@ -3,8 +3,6 @@ package com.github.kazuhito_m.mysample.presentation.api.profile;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
@@ -31,8 +29,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Sql("classpath:clear-transaction-data.sql")
 @Sql("add-initial-users.sql")
 public class UserProfileRestControllerTest {
-    static final Logger LOGGER = LoggerFactory.getLogger(UserProfileRestControllerTest.class);
-
     @Autowired
     WebApplicationContext webApplicationContext;
 
