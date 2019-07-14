@@ -43,11 +43,10 @@ public class UserProfileRestControllerTest {
     @Test
     public void プロフィール画像がアップロード出来る() throws Exception {
         byte[] sourceFileBytes = loadImageBytesOf("profile.png.binaly");
-        MockMultipartFile profileImageFile = new MockMultipartFile("file", "test.png", "image/png", sourceFileBytes);
 
         mvc.perform(
                 multipart("/api/user/profile/image")
-                        .file(profileImageFile)
+                        .file(new MockMultipartFile("file", "test.png", "image/png", sourceFileBytes))
                         .param("userIdentifier", "only.one@example.com")
         )
                 .andExpect(status().isCreated())
@@ -65,17 +64,15 @@ public class UserProfileRestControllerTest {
     @Test
     public void プロフィール画像のアップロード対象ユーザが無い場合404と理由を返す() throws Exception {
         byte[] sourceFileBytes = loadImageBytesOf("profile.png.binaly");
-        MockMultipartFile profileImageFile = new MockMultipartFile("file", "test.png", "image/png", sourceFileBytes);
 
         mvc.perform(
                 multipart("/api/user/profile/image")
-                        .file(profileImageFile)
+                        .file(new MockMultipartFile("file", "test.png", "image/png", sourceFileBytes))
                         .param("userIdentifier", "only.one@example.comX")
         )
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$.errorCause").value("指定されたデータは存在しません。"));
     }
-
 
     @Test
     public void プロフィール画像のアップロード時ファイルを指定しない無い場合400と理由を返す() throws Exception {
