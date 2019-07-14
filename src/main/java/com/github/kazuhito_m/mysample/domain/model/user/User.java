@@ -2,9 +2,6 @@ package com.github.kazuhito_m.mysample.domain.model.user;
 
 import javax.validation.Valid;
 
-/**
- * Created by haljik on 15/06/04.
- */
 public class User {
     @Valid
     UserIdentifier identifier;
@@ -22,11 +19,11 @@ public class User {
     PhoneNumber phoneNumber;
 
     public User(
-        UserIdentifier identifier,
-        Name name,
-        DateOfBirth dateOfBirth,
-        Gender gender,
-        PhoneNumber phoneNumber
+            UserIdentifier identifier,
+            Name name,
+            DateOfBirth dateOfBirth,
+            Gender gender,
+            PhoneNumber phoneNumber
     ) {
         this.identifier = identifier;
         this.name = name;
@@ -66,11 +63,11 @@ public class User {
     @Override
     public String toString() {
         return "User{" +
-            "identifier=" + identifier +
-            ", name=" + name +
-            ", dateOfBirth=" + dateOfBirth +
-            ", phoneNumber=" + phoneNumber +
-            ", gender=" + gender +
-            '}';
+                "identifier=" + identifier +
+                ", name=" + name +
+                ", dateOfBirth=" + dateOfBirth +
+                ", phoneNumber=" + phoneNumber +
+                ", gender=" + gender +
+                '}';
     }
 }
