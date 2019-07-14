@@ -19,12 +19,13 @@ import java.io.IOException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @Transactional(propagation = Propagation.NOT_SUPPORTED)
+@Sql("classpath:clear-transaction-data.sql")
+@Sql("add-initial-users.sql")
 public class UserProfileRestControllerTest {
     @Autowired
     WebApplicationContext webApplicationContext;
@@ -40,8 +41,6 @@ public class UserProfileRestControllerTest {
     }
 
     @Test
-    @Sql("classpath:clear-transaction-data.sql")
-    @Sql("add-initial-users.sql")
     public void プロフィール画像がアップロード出来る() throws Exception {
         byte[] sourceFileBytes = loadImageBytesOf("profile.png.binaly");
         MockMultipartFile profileImageFile = new MockMultipartFile("file", "test.png", "image/png", sourceFileBytes);
@@ -61,6 +60,31 @@ public class UserProfileRestControllerTest {
         assertThat(one.get("user_id")).isEqualTo("only.one@example.com");
         byte[] uploadedBytes = (byte[]) one.get("image_binary");
         assertThat(uploadedBytes.length).isEqualTo(sourceFileBytes.length);
+    }
+
+    @Test
+    public void プロフィール画像のアップロード対象ユーザが無い場合404と理由を返す() throws Exception {
+        byte[] sourceFileBytes = loadImageBytesOf("profile.png.binaly");
+        MockMultipartFile profileImageFile = new MockMultipartFile("file", "test.png", "image/png", sourceFileBytes);
+
+        mvc.perform(
+                multipart("/api/user/profile/image")
+                        .file(profileImageFile)
+                        .param("userIdentifier", "only.one@example.comX")
+        )
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.errorCause").value("指定されたデータは存在しません。"));
+    }
+
+
+    @Test
+    public void プロフィール画像のアップロード時ファイルを指定しない無い場合400と理由を返す() throws Exception {
+        mvc.perform(
+                multipart("/api/user/profile/image")
+                        .param("userIdentifier", "only.one@example.com")
+        )
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.errorCause").value("プロファイル用の画像ファイルを指定してください。 [file:'null']"));
     }
 
     private byte[] loadImageBytesOf(String name) throws IOException {
