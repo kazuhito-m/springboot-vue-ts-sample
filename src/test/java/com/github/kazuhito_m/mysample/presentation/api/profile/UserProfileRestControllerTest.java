@@ -3,8 +3,11 @@ package com.github.kazuhito_m.mysample.presentation.api.profile;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.context.jdbc.Sql;
@@ -18,6 +21,7 @@ import org.springframework.web.context.WebApplicationContext;
 import java.io.IOException;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -27,6 +31,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Sql("classpath:clear-transaction-data.sql")
 @Sql("add-initial-users.sql")
 public class UserProfileRestControllerTest {
+    static final Logger LOGGER = LoggerFactory.getLogger(UserProfileRestControllerTest.class);
+
     @Autowired
     WebApplicationContext webApplicationContext;
 
@@ -82,6 +88,37 @@ public class UserProfileRestControllerTest {
         )
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.errorCause").value("プロファイル用の画像ファイルを指定してください。 [file:'null']"));
+    }
+
+    @Test
+    public void プロフィール画像のダウンロードが出来る() throws Exception {
+        byte[] sourceFileBytes = loadImageBytesOf("profile.png.binaly");
+        insertProfileImageOf(sourceFileBytes, "only.one@example.com");
+
+        mvc.perform(
+                get("/api/user/profile/image")
+                        .param("userIdentifier", "only.one@example.com")
+        )
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_OCTET_STREAM))
+                .andExpect(content().bytes(sourceFileBytes));
+    }
+
+    @Test
+    public void プロフィール画像のダウンロードでIDを間違えると404と理由を返す() throws Exception {
+        // 事前にinsertしない…のでuserIdではダウンロードできないはず。
+        mvc.perform(
+                get("/api/user/profile/image")
+                        .param("userIdentifier", "only.one@example.com")
+        )
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.errorCause").value("指定されたデータは存在しません。"));
+    }
+
+    private void insertProfileImageOf(byte[] bytes, String userId) throws IOException {
+        jdbcTemplate.update("INSERT INTO profiles.profile_images (user_id, image_binary) VALUES (?, ?)", userId, bytes);
+        int count = jdbcTemplate.queryForObject("SELECT COUNT(*) FROM profiles.profile_images", Integer.class);
+        assertThat(count).isEqualTo(1);
     }
 
     private byte[] loadImageBytesOf(String name) throws IOException {
